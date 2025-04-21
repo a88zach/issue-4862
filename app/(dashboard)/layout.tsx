@@ -10,9 +10,11 @@ import SidebarFooterAccount, {
 import {
   FormControl,
   MenuItem,
+  MenuList,
   Select,
   SelectChangeEvent,
 } from "@mui/material";
+import { useRouter } from "next/navigation";
 
 function ToolbarActionsOverride() {
   const [account, setAccount] = React.useState("account1");
@@ -33,6 +35,18 @@ function ToolbarActionsOverride() {
         <MenuItem value={"account3"}>Account 3</MenuItem>
       </Select>
     </FormControl>
+  );
+}
+
+function SidebarFooterOverride() {
+  const router = useRouter();
+
+  return (
+    <MenuList sx={{ mb: 20 }}>
+      <MenuItem onClick={() => router.push("/")}>Dashboard</MenuItem>
+      <MenuItem onClick={() => router.push("/orders")}>Orders</MenuItem>
+      <MenuItem onClick={() => router.push("/employees")}>Employees</MenuItem>
+    </MenuList>
   );
 }
 
@@ -59,7 +73,7 @@ export default function Layout(props: { children: React.ReactNode }) {
       slots={{
         toolbarActions: ToolbarActionsOverride,
         toolbarAccount: ToolbarAccountOverride,
-        sidebarFooter: SidebarFooterAccount,
+        sidebarFooter: SidebarFooterOverride,
       }}
     >
       <PageContainer title={title}>
